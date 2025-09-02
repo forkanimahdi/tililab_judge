@@ -22,7 +22,7 @@ import {
 import { useForm } from '@inertiajs/react';
 
 const CreateJurer = () => {
-    const [open, setOpen] = useState(false); // control modal visibility
+    const [open, setOpen] = useState(false); 
 
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
@@ -34,11 +34,11 @@ const CreateJurer = () => {
         e.preventDefault();
         post(route("jurers.store"), {
             onSuccess: () => {
-                reset();     // clear form inputs
-                setOpen(false); // ✅ close modal
+                reset();   
+                setOpen(false); 
             },
             onError: () => {
-                alert("❌ Erreur lors de l'ajout du jurer");
+                console.log('Error');
             },
         });
     };
@@ -52,7 +52,7 @@ const CreateJurer = () => {
             </DialogTrigger>
 
             <DialogContent className="w-[50%] h-[60vh] flex flex-col gap-10">
-                <form onSubmit={handleSubmit} className="flex flex-col gap-8 flex-1">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-8">
                     <DialogHeader>
                         <DialogTitle>Ajouter Jurer</DialogTitle>
                     </DialogHeader>

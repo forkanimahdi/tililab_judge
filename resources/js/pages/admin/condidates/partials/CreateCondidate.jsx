@@ -35,13 +35,13 @@ const CreateCondidate = () => {
 
         post(route('condidat.store'), {
             data: formData,
-            forceFormData: true, // required for file upload
+            forceFormData: true,
             onSuccess: () => {
                 reset();
                 setOpen(false);
             },
             onError: () => {
-                alert('❌ Erreur lors de l\'ajout du condidat');
+                console.log('Error');
             },
         });
     };
@@ -54,8 +54,8 @@ const CreateCondidate = () => {
                 </Button>
             </DialogTrigger>
 
-            <DialogContent className="sm:max-w-[425px]">
-                <form onSubmit={handleSubmit}>
+            <DialogContent className="w-[50%] h-[60vh] flex flex-col gap-10">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-8">
                     <DialogHeader>
                         <DialogTitle>Ajouter Condidat</DialogTitle>
                     </DialogHeader>
