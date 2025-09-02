@@ -3,7 +3,6 @@ import { useCallback } from 'react';
 import Hero from "../../../public/assets/images/tlbg.jpg"
 import Logo from "../../../public/assets/images/logo.png"
 
-
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
@@ -20,45 +19,45 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <div className="flex h-3/4 items-center justify-center gap-4 overflow-hidden bg-black">
-            <Head title="Judges Login" />
+            <Head title="Connexion Jurés" />
 
             <div className="bg- text-black/50 dark:bg-black dark:text-white/50">
-                {/* Background decoration */}
+                {/* Décoration arrière-plan */}
                 <img
                     id="background"
                     className="absolute h-screen object-cover top-0 left-0 w-screen opacity-20"
                     src={Hero}
-                    alt="Background pattern"
+                    alt="Arrière-plan"
                 />
 
-                <div className="relative flex  flex-col items-center justify-center overflow-hidden selection:bg-[#0097aa] selection:text-white">
+                <div className="relative flex flex-col items-center justify-center overflow-hidden selection:bg-[#0097aa] selection:text-white">
                     <div className="relative w-full max-w-2xl overflow-hidden px-6 lg:max-w-7xl">
                         
-                        {/* Header */}
+                        {/* En-tête */}
                         <header className="flex flex-col items-center justify-center gap-3 py-10">
                             <img
                                 src={Logo}
-                                alt="Tililab Trophy Logo"
+                                alt="Logo Tililab Trophy"
                                 className="w-20 h-20 object-contain"
                             />
                             <h1 className="text-2xl font-bold text-white">
-                                Tililab Trophy – Judges Dashboard
+                                Tililab Trophy – Tableau de bord des Jurés
                             </h1>
-                            <p className="text-sm text-gray-400">Morocco</p>
+                            <p className="text-sm text-gray-400">Maroc</p>
                         </header>
 
-                        {/* Main content */}
+                        {/* Contenu principal */}
                         <main className="mt-6">
                             <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
                                 
-                                {/* Left card - Trophy info */}
+                                {/* Carte gauche - Infos Trophy */}
                                 <div
                                     className="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-[#18181b] p-6 shadow-lg ring-1 ring-white/[0.05] transition duration-300 hover:ring-[#0097aa] lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:ring-[#0097aa]/60"
                                 >
                                     <div className="relative flex w-full flex-1 items-stretch">
                                         <img
                                             src={Hero}
-                                            alt="Tililab Trophy visual"
+                                            alt="Visuel Tililab Trophy"
                                             className="aspect-video h-full w-full flex-1 rounded-[10px] object-cover drop-shadow-md"
                                         />
                                         <div className="absolute -bottom-16 -left-16 h-40 w-[calc(100%+8rem)] bg-gradient-to-b from-transparent via-black to-black opacity-70" />
@@ -67,10 +66,10 @@ export default function Login({ status, canResetPassword }) {
                                     <div className="relative flex items-center justify-between w-full">
                                         <div>
                                             <h2 className="text-xl font-semibold text-white">
-                                                Welcome, Judges
+                                                Bienvenue, Jurés
                                             </h2>
                                             <p className="text-sm text-gray-400">
-                                                Access your dashboard to manage and evaluate.
+                                                Accédez à votre tableau de bord pour gérer et évaluer.
                                             </p>
                                         </div>
                                         <svg
@@ -89,13 +88,13 @@ export default function Login({ status, canResetPassword }) {
                                     </div>
                                 </div>
 
-                                {/* Right card - Login form */}
+                                {/* Carte droite - Formulaire connexion */}
                                 <div className="flex flex-col items-center justify-center gap-6 overflow-hidden rounded-lg bg-[#18181b] p-6 ring-1 ring-white/[0.05] transition duration-300 hover:ring-[#0097aa] lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800">
                                     <form onSubmit={submit} className="w-[80%]">
                                         
                                         {/* Email */}
                                         <div>
-                                            <label className="text-gray-200 text-sm" htmlFor="email">Email:</label>
+                                            <label className="text-gray-200 text-sm" htmlFor="email">Email :</label>
                                             <input
                                                 id="email"
                                                 type="email"
@@ -114,9 +113,9 @@ export default function Login({ status, canResetPassword }) {
                                             )}
                                         </div>
 
-                                        {/* Password */}
+                                        {/* Mot de passe */}
                                         <div className="mt-4">
-                                            <label className="text-gray-200 text-sm" htmlFor="password">Password:</label>
+                                            <label className="text-gray-200 text-sm" htmlFor="password">Mot de passe :</label>
                                             <input
                                                 id="password"
                                                 type="password"
@@ -134,7 +133,7 @@ export default function Login({ status, canResetPassword }) {
                                             )}
                                         </div>
 
-                                        {/* Remember me */}
+                                        {/* Se souvenir de moi */}
                                         <div className="mt-4 flex items-center">
                                             <input
                                                 id="remember_me"
@@ -144,7 +143,7 @@ export default function Login({ status, canResetPassword }) {
                                                 className="rounded border-gray-300 text-[#0097aa] shadow-sm focus:ring-[#0097aa]"
                                             />
                                             <label htmlFor="remember_me" className="ms-2 text-sm text-gray-300">
-                                                Remember me
+                                                Se souvenir de moi
                                             </label>
                                         </div>
 
@@ -154,14 +153,14 @@ export default function Login({ status, canResetPassword }) {
                                                 href={route("password.request")}
                                                 className="text-sm text-gray-400 hover:text-[#0097aa]"
                                             >
-                                                Forgot your password?
+                                                Mot de passe oublié ?
                                             </a>
                                             <button
                                                 type="submit"
                                                 className="ms-3 rounded bg-[#0097aa] px-5 py-2 font-semibold text-white transition hover:bg-[#007c8a] disabled:opacity-50"
                                                 disabled={processing}
                                             >
-                                                Log in
+                                                Connexion
                                             </button>
                                         </div>
                                     </form>
@@ -169,9 +168,9 @@ export default function Login({ status, canResetPassword }) {
                             </div>
                         </main>
 
-                        {/* Footer */}
+                        {/* Pied de page */}
                         <footer className="py-16 text-center text-sm text-white/70">
-                            © {new Date().getFullYear()} Tililab Trophy – Judges Dashboard
+                            © {new Date().getFullYear()} Tililab Trophy – Tableau de bord des Jurés
                         </footer>
                     </div>
                 </div>
