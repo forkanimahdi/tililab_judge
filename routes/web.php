@@ -12,6 +12,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+    Route::post('/jurer/store', [UserController::class, 'store'])->name('jurers.store');
 });
 
 require __DIR__ . '/settings.php';

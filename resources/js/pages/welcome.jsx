@@ -32,7 +32,7 @@ export default function Login({ status, canResetPassword }) {
 
                 <div className="relative flex flex-col items-center justify-center overflow-hidden selection:bg-[#0097aa] selection:text-white">
                     <div className="relative w-full max-w-2xl overflow-hidden px-6 lg:max-w-7xl">
-                        
+
                         {/* En-tête */}
                         <header className="flex flex-col items-center justify-center gap-3 py-10">
                             <img
@@ -49,7 +49,7 @@ export default function Login({ status, canResetPassword }) {
                         {/* Contenu principal */}
                         <main className="mt-6">
                             <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
-                                
+
                                 {/* Carte gauche - Infos Trophy */}
                                 <div
                                     className="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-[#18181b] p-6 shadow-lg ring-1 ring-white/[0.05] transition duration-300 hover:ring-[#0097aa] lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:ring-[#0097aa]/60"
@@ -91,7 +91,7 @@ export default function Login({ status, canResetPassword }) {
                                 {/* Carte droite - Formulaire connexion */}
                                 <div className="flex flex-col items-center justify-center gap-6 overflow-hidden rounded-lg bg-[#18181b] p-6 ring-1 ring-white/[0.05] transition duration-300 hover:ring-[#0097aa] lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800">
                                     <form onSubmit={submit} className="w-[80%]">
-                                        
+
                                         {/* Email */}
                                         <div>
                                             <label className="text-gray-200 text-sm" htmlFor="email">Email :</label>
