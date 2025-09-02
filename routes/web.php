@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CondidatController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -13,6 +14,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
     Route::post('/jurer/store', [UserController::class, 'store'])->name('jurers.store');
+    Route::post('/condidat/store', [CondidatController::class, 'store'])->name('condidat.store');
 });
 
 require __DIR__ . '/settings.php';
