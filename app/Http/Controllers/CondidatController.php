@@ -89,7 +89,8 @@ class CondidatController extends Controller
         }
         $condidate->delete();
 
-        return redirect()->route('candidates.index')->with('success', 'Candidat supprimé avec succès.');
+        return redirect("/dashboard");
+
     }
 
 

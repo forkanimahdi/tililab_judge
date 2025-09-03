@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useForm } from "@inertiajs/react"
+import { router, useForm } from "@inertiajs/react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
@@ -93,12 +93,18 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
     }
 
     // --- DELETE CANDIDATE ---
-    const handleDelete = () => {
-        Inertia.delete(route("candidates.destroy", candidate.id), {
-            preserveScroll: true,
-            onSuccess: () => window.location.href = route("candidates.index")
-        })
-    }
+    const handleDelete = (id) => {
+        if (confirm("Voulez-vous vraiment supprimer ce candidat ? Cette action est irréversible.")) {
+            router.delete(route('candidates.destroy', id), {
+                onSuccess: () => {
+                    router.visit("/dashboard");
+                },
+                onError: (errors) => {
+                    alert('Une erreur est survenue : ' + errors);
+                }
+            });
+        }
+    };
 
     // --- EDIT CANDIDATE ---
     const handleEditSubmit = (e) => {
@@ -212,7 +218,7 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
                                         <DialogClose asChild>
                                             <Button variant="outline">Annuler</Button>
                                         </DialogClose>
-                                        <Button variant="destructive" onClick={handleDelete}>Supprimer</Button>
+                                        <Button variant="destructive" onClick={()=> {handleDelete(candidate.id)}}>Supprimer</Button>
                                     </DialogFooter>
                                 </DialogContent>
                             </Dialog>
