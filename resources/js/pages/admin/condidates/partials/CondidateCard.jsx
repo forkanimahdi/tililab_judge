@@ -29,11 +29,11 @@ const CondidateCard = ({ condidat, onEdit, onDelete }) => {
                 {condidat.image ? (
                     <img
                         src={'/storage/' + condidat.image}
-                        className="h-48 w-full object-cover rounded-t-lg"
+                        className="h-[45vh] w-full object-cover bg-top rounded-t-lg"
                         alt={condidat.name}
                     />
                 ) : (
-                    <div className="h-48 w-full bg-gray-100 flex items-center justify-center rounded-t-lg">
+                    <div className="h-[45vh] w-full bg-gray-100 flex items-center justify-center rounded-t-lg">
                         <User className="h-12 w-12 text-gray-400" />
                     </div>
                 )}

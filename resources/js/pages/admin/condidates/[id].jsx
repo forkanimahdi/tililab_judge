@@ -89,10 +89,13 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
                 <CandidateHeader candidate={candidate} average={totalAverage} evaluations={evaluations} authJudge={authJudge} onDelete={handleDelete} onEditSubmit={handleEditSubmit} />
                 <CardContent>
                     <Tabs value={tab} onValueChange={setTab} className="space-y-4">
-                        <TabsList className="grid grid-cols-3 w-full bg-gray-50 rounded-lg p-1">
+                        <TabsList className={`grid  w-full bg-gray-50 rounded-lg p-1 ${authJudge.role == "admin" ? "grid-cols-3": "grid-cols-2"}`}>
                             <TabsTrigger value="evaluation">Évaluer</TabsTrigger>
                             <TabsTrigger value="judges">Juges</TabsTrigger>
-                            <TabsTrigger value="decision">Décision finale</TabsTrigger>
+                            {
+                                authJudge.role == "admin" &&
+                                <TabsTrigger value="decision">Décision finale</TabsTrigger>
+                            }
                         </TabsList>
 
                         <TabsContent value="evaluation">
@@ -103,9 +106,12 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
                             <JudgesTab evaluations={evaluations} />
                         </TabsContent>
 
-                        <TabsContent value="decision">
-                            <FinalDecisionTab onDecision={handleFinalDecision} />
-                        </TabsContent>
+                        {
+                            authJudge.role == "admin" &&
+                            <TabsContent value="decision">
+                                <FinalDecisionTab onDecision={handleFinalDecision} />
+                            </TabsContent>
+                        }
                     </Tabs>
                 </CardContent>
             </Card>
