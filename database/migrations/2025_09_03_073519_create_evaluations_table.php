@@ -25,16 +25,13 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        Schema::table('condidates', function (Blueprint $table) {
-            $table->enum('final_decision', ['accepte', 'refuse', 'en_attente'])->default('en_attente');
-        });
+     
     }
 
     public function down(): void
     {
         Schema::dropIfExists('evaluations');
         Schema::table('condidates', function (Blueprint $table) {
-            $table->dropColumn('final_decision');
         });
     }
 };
