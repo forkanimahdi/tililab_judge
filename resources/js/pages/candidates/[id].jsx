@@ -86,7 +86,7 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
 
     // --- FINAL DECISION ---
     const handleFinalDecision = (decision) => {
-        router.post(route("candidates.finalDecision", candidate.id), { final_decision: decision }, {
+        router.put(route("candidates.finalDecision", candidate.id), { final_decision: decision }, {
             preserveScroll: true,
             onSuccess: () => location.reload()
         })
@@ -131,7 +131,7 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
                 <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6">
                     <div className="flex items-center gap-4">
                         <Avatar className="h-24 w-24">
-                            <AvatarImage src={candidate.image} alt={candidate.name} />
+                            <AvatarImage src={"/storage/"+ candidate.image} alt={candidate.name} />
                             <AvatarFallback>{candidate.name[0]}</AvatarFallback>
                         </Avatar>
                         <div>
@@ -275,14 +275,14 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
                                         <Button
                                             variant={data.decision === "oui" ? "default" : "outline"}
                                             onClick={() => setData("decision", "oui")}
-                                            className="flex items-center gap-1 text-white"
+                                            className="flex items-center gap-1"
                                         >
                                             <CheckCircle className="w-4 h-4" /> Oui
                                         </Button>
                                         <Button
                                             variant={data.decision === "non" ? "destructive" : "outline"}
                                             onClick={() => setData("decision", "non")}
-                                            className="flex items-center gap-1 text-white"
+                                            className="flex items-center gap-1"
                                         >
                                             <XCircle className="w-4 h-4" /> Non
                                         </Button>

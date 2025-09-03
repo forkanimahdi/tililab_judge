@@ -73,7 +73,7 @@ class CondidatController extends Controller
             if ($condidate->image) {
                 Storage::disk('public')->delete($condidate->image);
             }
-            $validated['image'] = $request->file('image')->store('condidats', 'public');
+            $validated['image'] = $request->file('image')->store('images/condidats', 'public');
         }
 
         $condidate->update($validated);

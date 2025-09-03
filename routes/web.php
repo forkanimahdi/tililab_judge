@@ -42,13 +42,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // routes/web.php
 Route::middleware(['auth'])->group(function () {
     Route::get('/candidates/{condidate}', [CondidatController::class, 'show'])->name('candidates.show');
-    Route::post('/candidates/{condidate}/decision', [CondidatController::class, 'setFinalDecision'])->name('candidates.decision');
     Route::delete('/{condidate}', [CondidatController::class, 'destroy'])->name('candidates.destroy');
     Route::put('/{condidate}', [CondidatController::class, 'update'])->name('candidates.update');
 
 
     Route::post('/candidates/{condidate}/evaluate', [EvaluationController::class, 'store'])->name('candidates.evaluate');
-    Route::post('/candidates/{condidate}/final-decision', [EvaluationController::class, 'setFinalDecision'])
+    Route::put('/candidates/{condidate}/final-decision', [EvaluationController::class, 'setFinalDecision'])
         ->name('candidates.finalDecision');
 
 
