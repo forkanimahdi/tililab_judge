@@ -86,7 +86,7 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
 
     // --- FINAL DECISION ---
     const handleFinalDecision = (decision) => {
-        Inertia.post(route("candidates.finalDecision", candidate.id), { final_decision: decision }, {
+        router.post(route("candidates.finalDecision", candidate.id), { final_decision: decision }, {
             preserveScroll: true,
             onSuccess: () => location.reload()
         })
@@ -114,10 +114,13 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
         formData.append("gender", editData.gender)
         if (editData.image) formData.append("image", editData.image)
 
-        Inertia.post(route("candidates.update", candidate.id), formData, {
-            method: "PUT",
+        // Spoof PUT method
+        formData.append("_method", "PUT")
+
+        router.post(route("candidates.update", candidate.id), formData, {
+            forceFormData: true,
             preserveScroll: true,
-            onSuccess: () => location.reload()
+            onSuccess: () => edit_closer.click()
         })
     }
 
@@ -193,7 +196,7 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
                                             />
                                         </div>
                                         <DialogFooter className="flex justify-end gap-2">
-                                            <DialogClose asChild>
+                                            <DialogClose id="edit_closer" asChild>
                                                 <Button variant="outline">Annuler</Button>
                                             </DialogClose>
                                             <Button type="submit">Mettre à jour</Button>
@@ -218,7 +221,7 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
                                         <DialogClose asChild>
                                             <Button variant="outline">Annuler</Button>
                                         </DialogClose>
-                                        <Button variant="destructive" onClick={()=> {handleDelete(candidate.id)}}>Supprimer</Button>
+                                        <Button variant="destructive" onClick={() => { handleDelete(candidate.id) }}>Supprimer</Button>
                                     </DialogFooter>
                                 </DialogContent>
                             </Dialog>
@@ -272,14 +275,14 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
                                         <Button
                                             variant={data.decision === "oui" ? "default" : "outline"}
                                             onClick={() => setData("decision", "oui")}
-                                            className="flex items-center gap-1 "
+                                            className="flex items-center gap-1 text-white"
                                         >
                                             <CheckCircle className="w-4 h-4" /> Oui
                                         </Button>
                                         <Button
                                             variant={data.decision === "non" ? "destructive" : "outline"}
                                             onClick={() => setData("decision", "non")}
-                                            className="flex items-center gap-1"
+                                            className="flex items-center gap-1 text-white"
                                         >
                                             <XCircle className="w-4 h-4" /> Non
                                         </Button>

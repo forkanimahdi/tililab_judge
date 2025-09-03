@@ -77,10 +77,12 @@ export default function Dashboard() {
                 </div>
 
                 {/* Jurers Section */}
-                <div className="flex items-center gap-4 pt-4">
-                    <Users size={24} />
-                    <h1 className="text-2xl font-bold">Juré(e)s</h1>
-                </div>
+                {auth.user?.role === "admin" && (
+                    <div className="flex items-center gap-4 pt-4">
+                        <Users size={24} />
+                        <h1 className="text-2xl font-bold">Juré(e)s</h1>
+                    </div>
+                )}
                 {auth.user?.role === "admin" && (
                     <div className="border border-gray-200 rounded-xl overflow-hidden">
                         <JurersTable jurers={jurers} />
