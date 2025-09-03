@@ -26,9 +26,9 @@ export default function Dashboard() {
     const averageScore =
         condidates.length > 0
             ? (
-                  condidates.reduce((acc, c) => acc + parseFloat(c.average || 0), 0) /
-                  condidates.length
-              ).toFixed(1)
+                condidates.reduce((acc, c) => acc + parseFloat(c.average || 0), 0) /
+                condidates.length
+            ).toFixed(1)
             : 0;
 
     return (
@@ -37,10 +37,12 @@ export default function Dashboard() {
 
             <div className="flex h-full flex-1 flex-col gap-6 p-4">
                 {/* Boutons d’action */}
-                <div className="flex gap-2 items-center justify-end">
-                    <CreateJurer />
-                    <CreateCondidate />
-                </div>
+                {auth.user?.role === "admin" && (
+                    <div className="flex gap-2 items-center justify-end">
+                        <CreateJurer />
+                        <CreateCondidate />
+                    </div>
+                )}
 
                 {/* Cartes de statistiques */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -97,7 +99,7 @@ export default function Dashboard() {
                     <h1 className="text-2xl font-bold">Candidats</h1>
                 </div>
                 <div className="border border-gray-200 rounded-xl overflow-hidden">
-                    <CondidatesTable condidates={condidates} />
+                    <CondidatesTable authRole={auth?.user?.role} condidates={condidates} />
                 </div>
             </div>
         </AppLayout>

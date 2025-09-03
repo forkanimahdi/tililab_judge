@@ -10,7 +10,7 @@ import { router } from '@inertiajs/react';
 import CreateCondidate from "./CreateCondidate";
 import CondidateCard from "./CondidateCard";
 
-const CondidateTable = ({ condidates }) => {
+const CondidateTable = ({ condidates, authRole }) => {
     const [search, setSearch] = useState("");
     const [view, setView] = useState("card"); // "card" or "table"
 
@@ -36,7 +36,7 @@ const CondidateTable = ({ condidates }) => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                 <div className="flex items-center gap-x-6">
-                
+
                     <div className="flex items-center gap-x-3">
                         <Button
                             variant={view === "card" ? "default" : "outline"}
@@ -64,11 +64,14 @@ const CondidateTable = ({ condidates }) => {
                         onChange={(e) => setSearch(e.target.value)}
                         className="max-w-sm"
                     />
-                    <CreateCondidate>
-                        <Button variant="primary" className="flex items-center gap-2">
-                            <Plus size={16} /> Ajouter
-                        </Button>
-                    </CreateCondidate>
+                    {
+                        authRole == "admin" &&
+                        <CreateCondidate>
+                            <Button variant="primary" className="flex items-center gap-2">
+                                <Plus size={16} /> Ajouter
+                            </Button>
+                        </CreateCondidate>
+                    }
                 </div>
             </div>
 
