@@ -7,12 +7,12 @@ import CreateJurer from "./admin/jurer/partials/CreateJurer";
 import CreateCondidate from "./admin/condidates/partials/CreateCondidate";
 import JurersTable from "./admin/jurer/partials/JurerTable";
 import CondidatesTable from "./admin/condidates/partials/CondidatesTable";
-import { Users, FileText, BarChart2, Award } from "lucide-react";
+import { Users, FileText, Award } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 const breadcrumbs = [
     {
-        title: "Dashboard",
+        title: "Tableau de bord",
         href: "/dashboard",
     },
 ];
@@ -20,47 +20,49 @@ const breadcrumbs = [
 export default function Dashboard() {
     const { auth, jurers, condidates } = usePage().props;
 
-    // Compute some stats
-    const totalJurers = jurers.length;
-    const totalCondidates = condidates.length;
+    // Calcul des statistiques
+    const totalJudges = jurers.length;
+    const totalCandidates = condidates.length;
     const averageScore =
         condidates.length > 0
-            ? (condidates.reduce((acc, c) => acc + parseFloat(c.average || 0), 0) / condidates.length).toFixed(1)
+            ? (
+                  condidates.reduce((acc, c) => acc + parseFloat(c.average || 0), 0) /
+                  condidates.length
+              ).toFixed(1)
             : 0;
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard" />
+            <Head title="Tableau de bord" />
 
             <div className="flex h-full flex-1 flex-col gap-6 p-4">
-
-                {/* Top Buttons */}
+                {/* Boutons d’action */}
                 <div className="flex gap-2 items-center justify-end">
                     <CreateJurer />
                     <CreateCondidate />
                 </div>
 
-                {/* Statistics Cards */}
+                {/* Cartes de statistiques */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     <Card className="border border-gray-200 shadow-sm">
                         <CardHeader className="flex items-center gap-2">
                             <Users size={24} />
-                            <CardTitle>Total des juré(e)s</CardTitle>
+                            <CardTitle>Nombre de juges</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p className="text-3xl font-bold">{totalJurers}</p>
-                            <CardDescription>Nombre de jurés enregistrés</CardDescription>
+                            <p className="text-3xl font-bold">{totalJudges}</p>
+                            <CardDescription>Total des juges enregistrés</CardDescription>
                         </CardContent>
                     </Card>
 
                     <Card className="border border-gray-200 shadow-sm">
                         <CardHeader className="flex items-center gap-2">
                             <FileText size={24} />
-                            <CardTitle>Total des participants</CardTitle>
+                            <CardTitle>Nombre de candidats</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p className="text-3xl font-bold">{totalCondidates}</p>
-                            <CardDescription>Nombre de participants enregistrés</CardDescription>
+                            <p className="text-3xl font-bold">{totalCandidates}</p>
+                            <CardDescription>Total des candidats inscrits</CardDescription>
                         </CardContent>
                     </Card>
 
@@ -71,28 +73,28 @@ export default function Dashboard() {
                         </CardHeader>
                         <CardContent>
                             <p className="text-3xl font-bold">{averageScore}/20</p>
-                            <CardDescription>Score moyen des participants évalués</CardDescription>
+                            <CardDescription>Score moyen des candidats évalués</CardDescription>
                         </CardContent>
                     </Card>
                 </div>
 
-                {/* Jurers Section */}
+                {/* Section Juges */}
                 {auth.user?.role === "admin" && (
-                    <div className="flex items-center gap-4 pt-4">
-                        <Users size={24} />
-                        <h1 className="text-2xl font-bold">Juré(e)s</h1>
-                    </div>
-                )}
-                {auth.user?.role === "admin" && (
-                    <div className="border border-gray-200 rounded-xl overflow-hidden">
-                        <JurersTable jurers={jurers} />
-                    </div>
+                    <>
+                        <div className="flex items-center gap-4 pt-4">
+                            <Users size={24} />
+                            <h1 className="text-2xl font-bold">Juges</h1>
+                        </div>
+                        <div className="border border-gray-200 rounded-xl overflow-hidden">
+                            <JurersTable jurers={jurers} />
+                        </div>
+                    </>
                 )}
 
-                {/* Participants Section */}
+                {/* Section Candidats */}
                 <div className="flex items-center gap-4 pt-4">
                     <FileText size={24} />
-                    <h1 className="text-2xl font-bold">Participants</h1>
+                    <h1 className="text-2xl font-bold">Candidats</h1>
                 </div>
                 <div className="border border-gray-200 rounded-xl overflow-hidden">
                     <CondidatesTable condidates={condidates} />
