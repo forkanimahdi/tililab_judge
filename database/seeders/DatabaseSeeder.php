@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Condidate;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -35,6 +36,11 @@ class DatabaseSeeder extends Seeder
                 'password' => 'user123',
                 'role' => 'jurer',
                 'gender' => 'Homme',
+            ]);
+            Condidate::create([
+                'name' => 'condidate' . $i,
+                'gender' => 'Homme',
+                'image' => 'image' . $i,
             ]);
         }
     }

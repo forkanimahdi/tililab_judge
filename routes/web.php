@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CondidatController;
 use App\Http\Controllers\UserController;
+use App\Models\Condidate;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -13,8 +14,10 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         $jurers = User::where('role', 'jurer')->paginate(5);
+        $condidates = Condidate::paginate(5);
         return Inertia::render('dashboard', [
-            'jurers' => $jurers
+            'jurers' => $jurers,
+            'condidates' => $condidates,
         ]);
     })->name('dashboard');
     Route::post('/jurer/store', [UserController::class, 'store'])->name('jurers.store');
