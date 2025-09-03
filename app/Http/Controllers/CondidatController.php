@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Condidate;
 use App\Models\Evaluation;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -92,5 +93,19 @@ class CondidatController extends Controller
     }
 
 
- 
+
+
+
+    public function destroyJudge($id)
+    {
+        $jurer = User::where('role', 'jurer')->findOrFail($id);
+
+        // if (auth()->id() == $jurer->id) {
+        //     return back()->with('error', 'Vous ne pouvez pas vous supprimer vous-même.');
+        // }
+
+        $jurer->delete();
+
+        return redirect()->back()->with('success', 'Juré supprimé avec succès.');
+    }
 }

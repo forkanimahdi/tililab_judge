@@ -5,7 +5,7 @@ import CreateJurer from './admin/jurer/partials/CreateJurer'
 import CreateCondidate from './admin/condidates/partials/CreateCondidate'
 import JurersTable from './admin/jurer/partials/JurerTable'
 import CondidatesTable from './admin/condidates/partials/CondidatesTable'
-import { FileText } from 'lucide-react';
+import { FileText, Users } from 'lucide-react';
 
 const breadcrumbs = [
     {
@@ -36,6 +36,10 @@ export default function Dashboard() {
                     <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
                     </div>
+                </div>
+                   <div className="flex items-center gap-4">
+                    <Users size={24} className="" />
+                    <h1 className="text-2xl font-bold ">Juré(e)s</h1>
                 </div>
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
                     {/* <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" /> */}

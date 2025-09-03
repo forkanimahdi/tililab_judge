@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
     Table,
@@ -8,91 +10,102 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Users } from "lucide-react";
+import { Users, Trash2 } from "lucide-react";
+import { router } from "@inertiajs/react";
 import CreateJurer from "./CreateJurer";
 
 const JurersTable = ({ jurers }) => {
-    return (
-        <div className="overflow-x-auto border rounded-lg shadow-md py-5">
-            <div className="flex flex-col gap-10">
-                <div className="flex items-center justify-between">
-                    <div className="flex gap-4 items-center">
-                        <Users size={45} />
-                        <h1 className="text-4xl font-semibold">Jurers</h1>
-                    </div>
-                    <CreateJurer />
-                </div>
-                <Table>
-                    <TableHeader className="bg-gray-100 dark:bg-gray-800">
-                        <TableRow>
-                            <TableHead className="text-left">#</TableHead>
-                            <TableHead className="text-left">Nom</TableHead>
-                            <TableHead className="text-left">Email</TableHead>
-                            <TableHead className="text-left">Genre</TableHead>
-                            <TableHead className="text-left">Actions</TableHead>
-                        </TableRow>
-                    </TableHeader>
 
-                    <TableBody>
-                        {jurers?.data.map((jurer, index) => (
-                            <TableRow
-                                key={jurer.id}
-                                className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                            >
-                                <TableCell>
-                                    {index + 1 + (jurers.current_page - 1) * jurers.per_page}
-                                </TableCell>
-                                <TableCell>{jurer.name}</TableCell>
-                                <TableCell>{jurer.email}</TableCell>
-                                <TableCell>{jurer.gender}</TableCell>
-                                <TableCell className="flex gap-2">
-                                    <Button
-                                        size="sm"
-                                        variant="outline"
-                                        onClick={() => window.location.href = `/jurers/${jurer.id}/edit`}
-                                    >
-                                        Edit
-                                    </Button>
-                                    <Button
-                                        size="sm"
-                                        variant="destructive"
-                                        onClick={() => {
-                                            if (confirm("Supprimer ce juré ?")) {
-                                                window.location.href = `/jurers/${jurer.id}/delete`;
-                                            }
-                                        }}
-                                    >
-                                        Delete
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+    
+
+
+const handleDelete = (id) => {
+    if (confirm("Voulez-vous vraiment supprimer ce juré ? Cette action est irréversible.")) {
+        router.delete(route('jurers.destroy', id), {
+            onSuccess: () => {
+                alert('Juré supprimé avec succès.');
+            },
+            onError: (errors) => {
+                alert('Une erreur est survenue : ' + errors);
+            }
+        });
+    }
+};
+
+
+
+
+    return (
+        <div className="overflow-x-auto border rounded-lg shadow-md p-6">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                <div className=""></div>
+                <CreateJurer>
+                    <Button variant="primary" className="flex items-center gap-2">
+                        Ajouter un juré
+                    </Button>
+                </CreateJurer>
             </div>
+
+            {/* Table */}
+            <Table className=" rounded-lg border border-gray-200">
+                <TableHeader className="">
+                    <TableRow>
+                        <TableHead className="text-left w-10">#</TableHead>
+                        <TableHead className="text-left">Nom</TableHead>
+                        <TableHead className="text-left">Email</TableHead>
+                        <TableHead className="text-left">Genre</TableHead>
+                        <TableHead className="text-center w-32">Actions</TableHead>
+                    </TableRow>
+                </TableHeader>
+
+                <TableBody>
+                    {jurers?.map((jurer, index) => (
+                        <TableRow
+                            key={jurer.id}
+                            className=" transition-colors cursor-default"
+                        >
+                            <TableCell>{index + 1 }</TableCell>
+                            <TableCell>{jurer.name}</TableCell>
+                            <TableCell>{jurer.email}</TableCell>
+                            <TableCell>{jurer.gender === "M" ? "Masculin" : "Féminin"}</TableCell>
+                            <TableCell className="flex justify-center">
+                                <Button
+                                    size="sm"
+                                    variant="destructive"
+                                    className="flex items-center gap-1"
+                                    onClick={() => handleDelete(jurer.id)}
+                                >
+                                    <Trash2 size={14} /> Supprimer
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
 
             {/* Pagination */}
-            <div className="flex justify-between items-center mt-4 p-2 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <a
-                    href={jurers.prev_page_url || "#"}
-                    className={`px-4 py-2 rounded border bg-white hover:bg-gray-100 ${!jurers.prev_page_url ? "opacity-50 pointer-events-none" : ""
-                        }`}
+            {/* <div className="flex justify-between items-center mt-4 p-2 bg-gray-50 rounded-lg">
+                <Button
+                    variant="outline"
+                    disabled={!jurers.prev_page_url}
+                    onClick={() => jurers.prev_page_url && router.visit(jurers.prev_page_url)}
                 >
-                    Previous
-                </a>
+                    Précédent
+                </Button>
 
                 <span className="text-sm font-medium">
-                    Page {jurers.current_page} of {jurers.last_page}
+                    Page {jurers.current_page} sur {jurers.last_page}
                 </span>
 
-                <a
-                    href={jurers.next_page_url || "#"}
-                    className={`px-4 py-2 rounded border bg-white hover:bg-gray-100 ${!jurers.next_page_url ? "opacity-50 pointer-events-none" : ""
-                        }`}
+                <Button
+                    variant="outline"
+                    disabled={!jurers.next_page_url}
+                    onClick={() => jurers.next_page_url && router.visit(jurers.next_page_url)}
                 >
-                    Next
-                </a>
-            </div>
+                    Suivant
+                </Button>
+            </div> */}
         </div>
     );
 };

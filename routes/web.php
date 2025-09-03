@@ -14,7 +14,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
-        $jurers = User::where('role', 'jurer')->paginate(5);
+        $jurers = User::where('role', 'jurer')->get();
         $condidates = Condidate::with('evaluations')->get()->map(function ($c) {
             $total = $c->evaluations->sum(function ($e) {
                 return $e->motivation + $e->implication + $e->originalite + $e->communication;
@@ -50,6 +50,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/candidates/{condidate}/evaluate', [EvaluationController::class, 'store'])->name('candidates.evaluate');
     Route::post('/candidates/{condidate}/final-decision', [EvaluationController::class, 'setFinalDecision'])
         ->name('candidates.finalDecision');
+
+
+    Route::delete('/jurers/{id}', [CondidatController::class, 'destroyJudge'])
+        ->name('jurers.destroy');
+       
 });
 
 
