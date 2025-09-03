@@ -22,7 +22,8 @@ const CondidateCard = ({ condidat, onEdit, onDelete }) => {
 
     return (
         <Card
-            className="border rounded-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:scale-[1.02] bg-white h-full flex flex-col overflow-hidden relative"
+            onClick={() => router.visit(`/candidates/${condidat.id}`)}
+            className="border rounded-lg hover:shadow-xl transition-all cursor-pointer duration-300 ease-in-out transform hover:-translate-y-2 hover:scale-[1.02] bg-white h-full flex flex-col overflow-hidden relative"
         >
             <div className="relative">
                 {condidat.image ? (
@@ -45,7 +46,7 @@ const CondidateCard = ({ condidat, onEdit, onDelete }) => {
                 </div>
 
                 {/* Three-dot dropdown */}
-                <div className="absolute top-3 right-3">
+                {/* <div className="absolute top-3 right-3">
                     <Popover>
                         <PopoverTrigger asChild>
                             <Button variant="ghost" size="sm" className="p-1">
@@ -61,10 +62,10 @@ const CondidateCard = ({ condidat, onEdit, onDelete }) => {
                             </Button>
                         </PopoverContent>
                     </Popover>
-                </div>
+                </div> */}
             </div>
 
-            <CardContent className="p-4 flex-1 flex flex-col cursor-pointer" onClick={() => router.visit(`/candidates/${condidat.id}`)}>
+            <CardContent className="p-4 flex-1 flex flex-col cursor-pointer" >
                 <div className="flex-1">
                     <h3 className="text-lg font-semibold text-[#212529] mb-3 line-clamp-2">
                         {condidat?.name || 'Unknown Participant'}

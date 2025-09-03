@@ -5,6 +5,7 @@ import CreateJurer from './admin/jurer/partials/CreateJurer'
 import CreateCondidate from './admin/condidates/partials/CreateCondidate'
 import JurersTable from './admin/jurer/partials/JurerTable'
 import CondidatesTable from './admin/condidates/partials/CondidatesTable'
+import { FileText } from 'lucide-react';
 
 const breadcrumbs = [
     {
@@ -14,7 +15,7 @@ const breadcrumbs = [
 ];
 
 export default function Dashboard() {
-    const { auth, jurers , condidates } = usePage().props;
+    const { auth, jurers, condidates } = usePage().props;
     console.log(jurers);
 
     return (
@@ -43,9 +44,12 @@ export default function Dashboard() {
                             <JurersTable jurers={jurers} />
                         </div>}
                 </div>
+                <div className="flex items-center gap-x-1 py-3">
+                    <FileText size={24} />
+                    <h1 className="text-2xl font-bold">Participants</h1>
+                </div>
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
                     {/* <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" /> */}
-
                     <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
                         <CondidatesTable condidates={condidates} />
                     </div>

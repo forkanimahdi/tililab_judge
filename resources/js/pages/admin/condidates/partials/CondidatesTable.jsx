@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { Users, FileText, Plus, Grid, List } from "lucide-react";
+import { router } from '@inertiajs/react';
 import CreateCondidate from "./CreateCondidate";
 import CondidateCard from "./CondidateCard";
 
@@ -15,32 +16,45 @@ const CondidateTable = ({ condidates }) => {
 
     // Filter participants based on search input
     const filteredCondidates = useMemo(() => {
-        if (!search) return condidates?.data || [];
-        return condidates?.data.filter((c) =>
+        if (!search) return condidates || [];
+        return condidates.filter((c) =>
             c.name.toLowerCase().includes(search.toLowerCase())
         );
     }, [search, condidates]);
 
-    // Compute average points for classement
+    // Table sorted by average
     const sortedByAverage = useMemo(() => {
-        if (!condidates?.data) return [];
-        return [...condidates.data].map(c => {
-            const totalPoints = c.evaluations?.reduce((acc, e) => acc + e.motivation + e.implication + e.originalite + e.communication, 0) || 0;
-            const nbJudges = c.evaluations?.length || 1;
-            return {
-                ...c,
-                average: (totalPoints / nbJudges).toFixed(1)
-            };
-        }).sort((a, b) => b.average - a.average);
-    }, [condidates]);
+        return [...filteredCondidates].sort((a, b) => b.average - a.average);
+    }, [filteredCondidates]);
+
+    const handleNavigate = (id) => {
+        router.visit(`/candidates/${id}`);
+    };
 
     return (
         <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                <div className="flex items-center gap-2">
-                    <FileText size={24} />
-                    <h1 className="text-2xl font-bold">Participants</h1>
+                <div className="flex items-center gap-x-6">
+                
+                    <div className="flex items-center gap-x-3">
+                        <Button
+                            variant={view === "card" ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => setView("card")}
+                            className="flex items-center gap-1"
+                        >
+                            <Grid size={16} /> Carte
+                        </Button>
+                        <Button
+                            variant={view === "table" ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => setView("table")}
+                            className="flex items-center gap-1"
+                        >
+                            <List size={16} /> Classement
+                        </Button>
+                    </div>
                 </div>
 
                 <div className="flex gap-2 items-center">
@@ -50,22 +64,6 @@ const CondidateTable = ({ condidates }) => {
                         onChange={(e) => setSearch(e.target.value)}
                         className="max-w-sm"
                     />
-                    <Button
-                        variant={view === "card" ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => setView("card")}
-                        className="flex items-center gap-1"
-                    >
-                        <Grid size={16} /> Carte
-                    </Button>
-                    <Button
-                        variant={view === "table" ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => setView("table")}
-                        className="flex items-center gap-1"
-                    >
-                        <List size={16} /> Classement
-                    </Button>
                     <CreateCondidate>
                         <Button variant="primary" className="flex items-center gap-2">
                             <Plus size={16} /> Ajouter
@@ -91,7 +89,9 @@ const CondidateTable = ({ condidates }) => {
             {view === "card" && filteredCondidates.length > 0 && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {filteredCondidates.map((condidat) => (
-                        <CondidateCard key={condidat.id} condidat={condidat} />
+                        <div key={condidat.id} onClick={() => handleNavigate(condidat.id)}>
+                            <CondidateCard condidat={condidat} />
+                        </div>
                     ))}
                 </div>
             )}
@@ -110,7 +110,11 @@ const CondidateTable = ({ condidates }) => {
                         </TableHeader>
                         <TableBody>
                             {sortedByAverage.map((c, index) => (
-                                <TableRow key={c.id} className="hover:bg-gray-50 transition-colors">
+                                <TableRow
+                                    key={c.id}
+                                    className="hover:bg-gray-50 cursor-pointer transition-colors"
+                                    onClick={() => handleNavigate(c.id)}
+                                >
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{c.name}</TableCell>
                                     <TableCell className="text-center font-bold">{c.average}/20</TableCell>

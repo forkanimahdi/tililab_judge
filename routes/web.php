@@ -15,12 +15,23 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         $jurers = User::where('role', 'jurer')->paginate(5);
-        $condidates = Condidate::paginate(5);
+        $condidates = Condidate::with('evaluations')->get()->map(function ($c) {
+            $total = $c->evaluations->sum(function ($e) {
+                return $e->motivation + $e->implication + $e->originalite + $e->communication;
+            });
+            $nb = $c->evaluations->count() ?: 1;
+            $c->average = round($total / $nb, 1);
+            return $c;
+        });
+
         return Inertia::render('dashboard', [
             'jurers' => $jurers,
             'condidates' => $condidates,
         ]);
     })->name('dashboard');
+
+
+
     Route::post('/jurer/store', [UserController::class, 'store'])->name('jurers.store');
     Route::post('/condidat/store', [CondidatController::class, 'store'])->name('condidat.store');
     // Route::post('', [CondidatController::class, 'store'])->name('condidat.store');
@@ -35,12 +46,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/{condidate}', [CondidatController::class, 'destroy'])->name('candidates.destroy');
     Route::put('/{condidate}', [CondidatController::class, 'update'])->name('candidates.update');
 
-    
+
     Route::post('/candidates/{condidate}/evaluate', [EvaluationController::class, 'store'])->name('candidates.evaluate');
     Route::post('/candidates/{condidate}/final-decision', [EvaluationController::class, 'setFinalDecision'])
-    ->name('candidates.finalDecision');
-
-
+        ->name('candidates.finalDecision');
 });
 
 
