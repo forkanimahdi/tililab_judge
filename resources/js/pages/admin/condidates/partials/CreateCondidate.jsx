@@ -13,6 +13,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from '@inertiajs/react';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+
 
 const CreateCondidate = () => {
     const [open, setOpen] = useState(false);
@@ -86,13 +94,19 @@ const CreateCondidate = () => {
 
                         <div className="grid gap-3">
                             <Label htmlFor="genre">Genre</Label>
-                            <Input
+                            <Select
                                 id="genre"
-                                name="genre"
                                 value={data.genre}
-                                onChange={(e) => setData('genre', e.target.value)}
-                                placeholder='Entrer le genre de Condidat'
-                            />
+                                onValueChange={(value) => setData("genre", value)}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Sélectionner le genre" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="Femme">Femme</SelectItem>
+                                    <SelectItem value="Homme">Homme</SelectItem>
+                                </SelectContent>
+                            </Select>
                             {errors.genre && <span className="text-red-500">{errors.genre}</span>}
                         </div>
                     </div>
