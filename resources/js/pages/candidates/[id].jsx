@@ -203,7 +203,7 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
             <table className="w-full border border-gray-200 rounded-lg">
                 <thead className="bg-gray-100">
                     <tr>
-                        <th className="p-3 text-left">Juge</th>
+                        <th className="p-3 text-left">Juuuuuuuuuge</th>
                         <th className="p-3 text-center">Motivation</th>
                         <th className="p-3 text-center">Implication</th>
                         <th className="p-3 text-center">Originalité</th>

@@ -51,7 +51,7 @@ class CondidatController extends Controller
             'total'        => round($condidate->evaluations->avg(fn($e) => $e->total), 1),
         ];
 
-        return Inertia::render('candidates/[id]', [
+        return Inertia::render('admin/condidates/[id]', [
             'candidate' => $condidate,
             'evaluations' => $condidate->evaluations,
             'average' => $average,
