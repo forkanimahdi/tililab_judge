@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Storage;
 
 class CondidatController extends Controller
 {
+
+
+
+
     public function store(Request $request)
     {
         $request->validate([
@@ -21,7 +25,7 @@ class CondidatController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('condidats', 'public');
+            $imagePath = $request->file('image')->store('images/condidats', 'public');
         }
 
         $condidat = Condidate::create([
@@ -54,32 +58,39 @@ class CondidatController extends Controller
         ]);
     }
 
-    public function storeEvaluation(Request $request, Condidate $condidate)
+
+
+    public function update(Request $request, Condidate $condidate)
     {
-        $data = $request->validate([
-            'motivation' => 'required|integer|min:0|max:5',
-            'implication' => 'required|integer|min:0|max:5',
-            'originalite' => 'required|integer|min:0|max:5',
-            'communication' => 'required|integer|min:0|max:5',
-            'decision' => 'required|in:oui,non,discuter',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'gender' => 'required|in:M,F',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
-        Evaluation::updateOrCreate(
-            ['candidate_id' => $condidate->id, 'user_id' => Auth::id()],
-            $data
-        );
+        if ($request->hasFile('image')) {
+            if ($condidate->image) {
+                Storage::disk('public')->delete($condidate->image);
+            }
+            $validated['image'] = $request->file('image')->store('condidats', 'public');
+        }
 
-        return back()->with('success', 'Évaluation enregistrée.');
+        $condidate->update($validated);
+
+        return back()->with('success', 'Candidat mis à jour avec succès.');
     }
 
-    public function setFinalDecision(Request $request, Condidate $condidate)
+
+    public function destroy(Condidate $condidate)
     {
-        $data = $request->validate([
-            'final_decision' => 'required|in:accepte,refuse,en_attente',
-        ]);
+        if ($condidate->image) {
+            Storage::disk('public')->delete($condidate->image);
+        }
+        $condidate->delete();
 
-        $condidate->update($data);
-
-        return back()->with('success', 'Décision finale enregistrée.');
+        return redirect()->route('candidates.index')->with('success', 'Candidat supprimé avec succès.');
     }
+
+
+ 
 }

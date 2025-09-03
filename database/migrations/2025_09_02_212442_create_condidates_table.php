@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('image')->nullable();
             $table->string('gender');
+            $table->enum('final_decision', ['accepte', 'refuse' , "disscuter"])->default('disscuter');
             $table->timestamps();
         });
     }

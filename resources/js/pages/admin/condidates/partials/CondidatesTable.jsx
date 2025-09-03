@@ -1,101 +1,65 @@
-import React from "react";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
+"use client";
+
+import React, { useState, useMemo } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FileText, Users } from "lucide-react";
-// import Create from "./Createcondidate";
+import { Users, FileText, Plus } from "lucide-react";
 import CreateCondidate from "./CreateCondidate";
+import CondidateCard from "./CondidateCard";
 
 const CondidateTable = ({ condidates }) => {
-    console.log(condidates);
-    
+    const [search, setSearch] = useState("");
+
+    // Filter participants based on search input
+    const filteredCondidates = useMemo(() => {
+        if (!search) return condidates?.data || [];
+        return condidates?.data.filter((c) =>
+            c.name.toLowerCase().includes(search.toLowerCase())
+        );
+    }, [search, condidates]);
+
     return (
-        <div className="overflow-x-auto border rounded-lg shadow-md py-5">
-            <div className="flex flex-col gap-10">
-                <div className="flex items-center justify-between">
-                    <div className="flex gap-4 items-center">
-                        <FileText size={45} />
-                        <h1 className="text-4xl font-semibold">Condidates</h1>
-                    </div>
-                    <CreateCondidate />
+        <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                <div className="flex items-center gap-2">
+                    <FileText size={24} />
+                    <h1 className="text-2xl font-bold">Participants</h1>
                 </div>
-                <Table>
-                    <TableHeader className="bg-gray-100 dark:bg-gray-800">
-                        <TableRow>
-                            <TableHead className="text-left">#</TableHead>
-                            <TableHead className="text-left">Profile</TableHead>
-                            <TableHead className="text-left">Nom</TableHead>
-                            <TableHead className="text-left">Genre</TableHead>
-                            <TableHead className="text-left">Actions</TableHead>
-                        </TableRow>
-                    </TableHeader>
-
-                    <TableBody>
-                        {condidates?.data.map((condidate, index) => (
-                            <TableRow
-                                key={condidate.id}
-                                className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                            >
-                                <TableCell>
-                                    {index + 1 + (condidates.current_page - 1) * condidates.per_page}
-                                </TableCell>
-                                <TableCell>{condidate.image}</TableCell>
-                                <TableCell>{condidate.name}</TableCell>
-                                <TableCell>{condidate.gender}</TableCell>
-                                <TableCell className="flex gap-2">
-                                    <Button
-                                        size="sm"
-                                        variant="outline"
-                                        onClick={() => window.location.href = `/condidates/${condidate.id}/edit`}
-                                    >
-                                        Edit
-                                    </Button>
-                                    <Button
-                                        size="sm"
-                                        variant="destructive"
-                                        onClick={() => {
-                                            if (confirm("Supprimer ce juré ?")) {
-                                                window.location.href = `/condidates/${condidate.id}/delete`;
-                                            }
-                                        }}
-                                    >
-                                        Delete
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                <div className="flex gap-2 items-center">
+                    <Input
+                        placeholder="Search participant..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="max-w-sm"
+                    />
+                    <CreateCondidate>
+                        <Button variant="primary" className="flex items-center gap-2">
+                            <Plus size={16} /> Add
+                        </Button>
+                    </CreateCondidate>
+                </div>
             </div>
 
-            {/* Pagination */}
-            <div className="flex justify-between items-center mt-4 p-2 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <a
-                    href={condidates.prev_page_url || "#"}
-                    className={`px-4 py-2 rounded border bg-white hover:bg-gray-100 ${!condidates.prev_page_url ? "opacity-50 pointer-events-none" : ""
-                        }`}
-                >
-                    Previous
-                </a>
-
-                <span className="text-sm font-medium">
-                    Page {condidates.current_page} of {condidates.last_page}
-                </span>
-
-                <a
-                    href={condidates.next_page_url || "#"}
-                    className={`px-4 py-2 rounded border bg-white hover:bg-gray-100 ${!condidates.next_page_url ? "opacity-50 pointer-events-none" : ""
-                        }`}
-                >
-                    Next
-                </a>
-            </div>
+            {/* Participants Grid */}
+            {filteredCondidates.length === 0 ? (
+                <Card className="border-0 mt-8">
+                    <CardContent className="p-12 text-center">
+                        <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
+                            <Users className="h-12 w-12 text-gray-400" />
+                        </div>
+                        <h2 className="mb-3 text-2xl font-bold text-[#212529]">No Participants Found</h2>
+                        <p className="mb-6 text-gray-600">No participants match your search. Try another name or adjust your filters.</p>
+                    </CardContent>
+                </Card>
+            ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {filteredCondidates.map((condidat) => (
+                        <CondidateCard key={condidat.id} condidat={condidat} />
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
