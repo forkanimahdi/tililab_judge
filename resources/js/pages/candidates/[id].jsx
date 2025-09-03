@@ -341,10 +341,10 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
                         {/* --- FINAL DECISION TAB --- */}
                         <TabsContent value="decision">
                             <div className="mt-6 flex flex-col sm:flex-row gap-4">
-                                <Button onClick={() => handleFinalDecision("accepte")} className="flex items-center gap-2 bg-primary text-white w-full sm:w-auto">
+                                <Button onClick={() => handleFinalDecision("accepté")} className="flex items-center gap-2 bg-primary text-white w-full sm:w-auto">
                                     <CheckCircle className="w-4 h-4" /> Accepter
                                 </Button>
-                                <Button onClick={() => handleFinalDecision("refuse")} variant="destructive" className="flex items-center gap-2 w-full sm:w-auto">
+                                <Button onClick={() => handleFinalDecision("refusé")} variant="destructive" className="flex items-center gap-2 w-full sm:w-auto">
                                     <XCircle className="w-4 h-4" /> Refuser
                                 </Button>
                             </div>

@@ -11,9 +11,9 @@ const CondidateCard = ({ condidat, onEdit, onDelete }) => {
         switch (step) {
             case 'pending':
                 return 'bg-[#f2f2f2] text-[#212529]';
-            case 'accepte':
+            case 'accepté':
                 return 'bg-[#00C851] text-white';
-            case 'refuse':
+            case 'refusé':
                 return 'bg-[#ff4444] text-white';
             default:
                 return 'bg-[#212529] text-white';

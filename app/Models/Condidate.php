@@ -11,6 +11,7 @@ class Condidate extends Model
         'name',
         'image',
         'gender',
+         'final_decision',
     ];
 
 

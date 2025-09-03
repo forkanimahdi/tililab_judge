@@ -80,11 +80,10 @@ class EvaluationController extends Controller
 
     public function setFinalDecision(Request $request, Condidate $condidate)
     {
-        dd($request->all());
         $data = $request->validate([
-            'final_decision' => 'required|in:accepte,refuse',
+            'final_decision' => 'required|in:accepté,refusé',
         ]);
-
+        
         $condidate->update([
             'final_decision' => $data['final_decision']
         ]);

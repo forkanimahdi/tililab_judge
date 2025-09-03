@@ -103,8 +103,8 @@ const CreateCondidate = () => {
                                     <SelectValue placeholder="Sélectionner le genre" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="Femme">Femme</SelectItem>
-                                    <SelectItem value="Homme">Homme</SelectItem>
+                                    <SelectItem value="F">Femme</SelectItem>
+                                    <SelectItem value="M">Homme</SelectItem>
                                 </SelectContent>
                             </Select>
                             {errors.genre && <span className="text-red-500">{errors.genre}</span>}
