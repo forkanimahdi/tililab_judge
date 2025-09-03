@@ -1,62 +1,99 @@
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
-import AppLayout from '@/layouts/app-layout';
-import { Head, usePage } from '@inertiajs/react';
-import CreateJurer from './admin/jurer/partials/CreateJurer'
-import CreateCondidate from './admin/condidates/partials/CreateCondidate'
-import JurersTable from './admin/jurer/partials/JurerTable'
-import CondidatesTable from './admin/condidates/partials/CondidatesTable'
-import { FileText, Users } from 'lucide-react';
+"use client";
+
+import React from "react";
+import AppLayout from "@/layouts/app-layout";
+import { Head, usePage } from "@inertiajs/react";
+import CreateJurer from "./admin/jurer/partials/CreateJurer";
+import CreateCondidate from "./admin/condidates/partials/CreateCondidate";
+import JurersTable from "./admin/jurer/partials/JurerTable";
+import CondidatesTable from "./admin/condidates/partials/CondidatesTable";
+import { Users, FileText, BarChart2, Award } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 const breadcrumbs = [
     {
-        title: 'Dashboard',
-        href: '/dashboard',
+        title: "Dashboard",
+        href: "/dashboard",
     },
 ];
 
 export default function Dashboard() {
     const { auth, jurers, condidates } = usePage().props;
-    console.log(jurers);
+
+    // Compute some stats
+    const totalJurers = jurers.length;
+    const totalCondidates = condidates.length;
+    const averageScore =
+        condidates.length > 0
+            ? (condidates.reduce((acc, c) => acc + parseFloat(c.average || 0), 0) / condidates.length).toFixed(1)
+            : 0;
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <div className='flex gap-2 items-center justify-end'>
+
+            <div className="flex h-full flex-1 flex-col gap-6 p-4">
+
+                {/* Top Buttons */}
+                <div className="flex gap-2 items-center justify-end">
                     <CreateJurer />
                     <CreateCondidate />
                 </div>
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
+
+                {/* Statistics Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <Card className="border border-gray-200 shadow-sm">
+                        <CardHeader className="flex items-center gap-2">
+                            <Users size={24} />
+                            <CardTitle>Total des juré(e)s</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-3xl font-bold">{totalJurers}</p>
+                            <CardDescription>Nombre de jurés enregistrés</CardDescription>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="border border-gray-200 shadow-sm">
+                        <CardHeader className="flex items-center gap-2">
+                            <FileText size={24} />
+                            <CardTitle>Total des participants</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-3xl font-bold">{totalCondidates}</p>
+                            <CardDescription>Nombre de participants enregistrés</CardDescription>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="border border-gray-200 shadow-sm">
+                        <CardHeader className="flex items-center gap-2">
+                            <Award size={24} />
+                            <CardTitle>Score moyen</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-3xl font-bold">{averageScore}/20</p>
+                            <CardDescription>Score moyen des participants évalués</CardDescription>
+                        </CardContent>
+                    </Card>
                 </div>
-                   <div className="flex items-center gap-4">
-                    <Users size={24} className="" />
-                    <h1 className="text-2xl font-bold ">Juré(e)s</h1>
+
+                {/* Jurers Section */}
+                <div className="flex items-center gap-4 pt-4">
+                    <Users size={24} />
+                    <h1 className="text-2xl font-bold">Juré(e)s</h1>
                 </div>
-                <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
-                    {/* <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" /> */}
-                    {auth.user?.role === 'admin' &&
-                        <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
-                            <JurersTable jurers={jurers} />
-                        </div>}
-                </div>
-                <div className="flex items-center gap-x-1 py-3">
+                {auth.user?.role === "admin" && (
+                    <div className="border border-gray-200 rounded-xl overflow-hidden">
+                        <JurersTable jurers={jurers} />
+                    </div>
+                )}
+
+                {/* Participants Section */}
+                <div className="flex items-center gap-4 pt-4">
                     <FileText size={24} />
                     <h1 className="text-2xl font-bold">Participants</h1>
                 </div>
-                <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
-                    {/* <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" /> */}
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
-                        <CondidatesTable condidates={condidates} />
-                    </div>
+                <div className="border border-gray-200 rounded-xl overflow-hidden">
+                    <CondidatesTable condidates={condidates} />
                 </div>
             </div>
         </AppLayout>
