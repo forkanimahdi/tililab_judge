@@ -4,6 +4,7 @@ import { Head, usePage } from '@inertiajs/react';
 import CreateJurer from './admin/jurer/partials/CreateJurer'
 import CreateCondidate from './admin/condidates/partials/CreateCondidate'
 import JurersTable from './admin/jurer/partials/JurerTable'
+import CondidatesTable from './admin/condidates/partials/CondidatesTable'
 
 const breadcrumbs = [
     {
@@ -12,10 +13,10 @@ const breadcrumbs = [
     },
 ];
 
-export default function Dashboard() {    
-    const { auth , jurers } = usePage().props;
+export default function Dashboard() {
+    const { auth, jurers , condidates } = usePage().props;
     console.log(jurers);
-    
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -41,6 +42,13 @@ export default function Dashboard() {
                         <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
                             <JurersTable jurers={jurers} />
                         </div>}
+                </div>
+                <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
+                    {/* <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" /> */}
+
+                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
+                        <CondidatesTable condidates={condidates} />
+                    </div>
                 </div>
             </div>
         </AppLayout>
