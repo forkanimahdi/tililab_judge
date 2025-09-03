@@ -131,11 +131,91 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
                 <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6">
                     <div className="flex items-center gap-4">
                         <Avatar className="h-24 w-24">
-                            <AvatarImage src={"/storage/"+ candidate.image} alt={candidate.name} />
+                            <AvatarImage src={"/storage/" + candidate.image} alt={candidate.name} />
                             <AvatarFallback>{candidate.name[0]}</AvatarFallback>
                         </Avatar>
                         <div>
-                            <CardTitle className="text-2xl font-semibold">{candidate.name}</CardTitle>
+                            <div className="flex items-center justify-between gap-x-3 w-full">
+                                <CardTitle className="text-2xl font-semibold">{candidate.name}</CardTitle>
+                                {/* Edit/Delete for Admin */}
+                                {authJudge.role === "admin" && (
+                                    <div className="flex gap-2">
+                                        {/* --- EDIT --- */}
+                                        <Dialog>
+                                            <DialogTrigger asChild>
+                                                <Button variant="outline" size="sm" className="flex items-center gap-1">
+                                                    <Edit2 className="w-4 h-4" /> 
+                                                </Button>
+                                            </DialogTrigger>
+                                            <DialogContent>
+                                                <DialogHeader>
+                                                    <DialogTitle>Éditer le candidat</DialogTitle>
+                                                </DialogHeader>
+                                                <form onSubmit={handleEditSubmit} className="space-y-4">
+                                                    <div>
+                                                        <Label>Nom</Label>
+                                                        <input
+                                                            type="text"
+                                                            value={editData.name}
+                                                            onChange={(e) => setEditData("name", e.target.value)}
+                                                            className="w-full border p-2 rounded"
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <Label>Genre</Label>
+                                                        <select
+                                                            value={editData.gender}
+                                                            onChange={(e) => setEditData("gender", e.target.value)}
+                                                            className="w-full border p-2 rounded"
+                                                            required
+                                                        >
+                                                            <option value="M">Masculin</option>
+                                                            <option value="F">Féminin</option>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <Label>Image</Label>
+                                                        <input
+                                                            type="file"
+                                                            accept="image/*"
+                                                            onChange={(e) => setEditData("image", e.target.files[0])}
+                                                            className="w-full"
+                                                        />
+                                                    </div>
+                                                    <DialogFooter className="flex justify-end gap-2">
+                                                        <DialogClose id="edit_closer" asChild>
+                                                            <Button variant="outline">Annuler</Button>
+                                                        </DialogClose>
+                                                        <Button type="submit">Mettre à jour</Button>
+                                                    </DialogFooter>
+                                                </form>
+                                            </DialogContent>
+                                        </Dialog>
+
+                                        {/* --- DELETE --- */}
+                                        <Dialog>
+                                            <DialogTrigger asChild>
+                                                <Button variant="destructive" size="sm" className="flex items-center gap-1">
+                                                    <Trash2 className="w-4 h-4" /> 
+                                                </Button>
+                                            </DialogTrigger>
+                                            <DialogContent>
+                                                <DialogHeader>
+                                                    <DialogTitle>Supprimer le candidat</DialogTitle>
+                                                </DialogHeader>
+                                                <p>Voulez-vous vraiment supprimer ce candidat ? Cette action est irréversible.</p>
+                                                <DialogFooter className="flex justify-end gap-2">
+                                                    <DialogClose asChild>
+                                                        <Button variant="outline">Annuler</Button>
+                                                    </DialogClose>
+                                                    <Button variant="destructive" onClick={() => { handleDelete(candidate.id) }}>Supprimer</Button>
+                                                </DialogFooter>
+                                            </DialogContent>
+                                        </Dialog>
+                                    </div>
+                                )}
+                            </div>
                             <CardDescription className="text-gray-600">
                                 Genre: <span className="font-medium">{candidate.gender === "F" ? "Féminin" : "Masculin"}</span>
                             </CardDescription>
@@ -149,84 +229,7 @@ export default function CandidateDetailsPage({ candidate, evaluations, authJudge
                         </div>
                     </div>
 
-                    {/* Edit/Delete for Admin */}
-                    {authJudge.role === "admin" && (
-                        <div className="flex gap-2">
-                            {/* --- EDIT --- */}
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <Button variant="outline" size="sm" className="flex items-center gap-1">
-                                        <Edit2 className="w-4 h-4" /> Éditer
-                                    </Button>
-                                </DialogTrigger>
-                                <DialogContent>
-                                    <DialogHeader>
-                                        <DialogTitle>Éditer le candidat</DialogTitle>
-                                    </DialogHeader>
-                                    <form onSubmit={handleEditSubmit} className="space-y-4">
-                                        <div>
-                                            <Label>Nom</Label>
-                                            <input
-                                                type="text"
-                                                value={editData.name}
-                                                onChange={(e) => setEditData("name", e.target.value)}
-                                                className="w-full border p-2 rounded"
-                                                required
-                                            />
-                                        </div>
-                                        <div>
-                                            <Label>Genre</Label>
-                                            <select
-                                                value={editData.gender}
-                                                onChange={(e) => setEditData("gender", e.target.value)}
-                                                className="w-full border p-2 rounded"
-                                                required
-                                            >
-                                                <option value="M">Masculin</option>
-                                                <option value="F">Féminin</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <Label>Image</Label>
-                                            <input
-                                                type="file"
-                                                accept="image/*"
-                                                onChange={(e) => setEditData("image", e.target.files[0])}
-                                                className="w-full"
-                                            />
-                                        </div>
-                                        <DialogFooter className="flex justify-end gap-2">
-                                            <DialogClose id="edit_closer" asChild>
-                                                <Button variant="outline">Annuler</Button>
-                                            </DialogClose>
-                                            <Button type="submit">Mettre à jour</Button>
-                                        </DialogFooter>
-                                    </form>
-                                </DialogContent>
-                            </Dialog>
 
-                            {/* --- DELETE --- */}
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <Button variant="destructive" size="sm" className="flex items-center gap-1">
-                                        <Trash2 className="w-4 h-4" /> Supprimer
-                                    </Button>
-                                </DialogTrigger>
-                                <DialogContent>
-                                    <DialogHeader>
-                                        <DialogTitle>Supprimer le candidat</DialogTitle>
-                                    </DialogHeader>
-                                    <p>Voulez-vous vraiment supprimer ce candidat ? Cette action est irréversible.</p>
-                                    <DialogFooter className="flex justify-end gap-2">
-                                        <DialogClose asChild>
-                                            <Button variant="outline">Annuler</Button>
-                                        </DialogClose>
-                                        <Button variant="destructive" onClick={() => { handleDelete(candidate.id) }}>Supprimer</Button>
-                                    </DialogFooter>
-                                </DialogContent>
-                            </Dialog>
-                        </div>
-                    )}
                 </CardHeader>
 
                 <CardContent>
