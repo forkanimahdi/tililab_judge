@@ -6,10 +6,10 @@ import AppLayout from "@/layouts/app-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import CandidateHeader from "@/components/CandidateDetails/CandidateHeader";
-import EvaluationTab from "@/components/CandidateDetails/EvaluationTab";
-import JudgesTab from "@/components/CandidateDetails/JudgesTab";
-import FinalDecisionTab from "@/components/CandidateDetails/FinalDecisionTab";
+import CandidateHeader from "./partials/CandidateHeader";
+import EvaluationTab from "./partials/EvaluationTab";
+import JudgesTab from "./partials/JudgesTab";
+import FinalDecisionTab from "./partials/FinalDecisionTab";
 
 export default function CandidateDetailsPage({ candidate, evaluations, authJudge }) {
     const [tab, setTab] = useState("evaluation");
