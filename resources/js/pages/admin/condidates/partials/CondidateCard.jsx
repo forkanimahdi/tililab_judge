@@ -41,7 +41,7 @@ const CondidateCard = ({ condidat, onEdit, onDelete }) => {
                 {/* Badge */}
                 <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
                     <Badge className={`${getStepBadge(condidat?.final_decision)} rounded-lg text-xs font-medium w-fit`}>
-                        {condidat?.final_decision?.replaceAll('_', ' ') || 'Unknown'}
+                        {condidat?.final_decision?.replaceAll('_', ' ') || 'Unknown'}{(condidat.gender == "F" && condidat.final_decision != "discuter") && "e"}
                     </Badge>
                 </div>
 

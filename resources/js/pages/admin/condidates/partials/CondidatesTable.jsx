@@ -118,7 +118,7 @@ const CondidateTable = ({ condidates }) => {
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{c.name}</TableCell>
                                     <TableCell className="text-center font-bold">{c.average}/20</TableCell>
-                                    <TableCell className="text-center">{c.final_decision ? c.final_decision.replaceAll('_', ' ') : "Non défini"}</TableCell>
+                                    <TableCell className="text-center">{c.final_decision ? c.final_decision.replaceAll('_', ' ') : "Non défini"}{(c.gender == "F" && c.final_decision != "discuter") && "e"}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
