@@ -30,7 +30,7 @@ class InvitationMailer extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Bienvenue chez LionsGEEK !',
+            subject: 'Bienvenue chez Tililab !',
         );
     }
 

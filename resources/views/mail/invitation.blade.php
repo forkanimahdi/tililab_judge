@@ -41,7 +41,7 @@
 
                             <!-- Login Button -->
                             <div style="text-align:center;margin:20px 0;">
-                                <a href="{{ url('/login') }}" style="background-color:#0097aa;color:#ffffff;padding:12px 25px;text-decoration:none;border-radius:5px;display:inline-block;font-weight:bold;">Se connecter</a>
+                                <a href="http://tililab.mylionsgeek.ma/login" style="background-color:#0097aa;color:#ffffff;padding:12px 25px;text-decoration:none;border-radius:5px;display:inline-block;font-weight:bold;">Se connecter</a>
                             </div>
 
                             <p>Nous vous recommandons de changer votre mot de passe après votre première connexion pour des raisons de sécurité.</p>
