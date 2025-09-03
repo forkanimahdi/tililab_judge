@@ -12,4 +12,10 @@ class Condidate extends Model
         'image',
         'gender',
     ];
+
+
+    public function evaluations()
+    {
+        return $this->hasMany(Evaluation::class, 'candidate_id');
+    }
 }

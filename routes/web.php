@@ -22,5 +22,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Route::post('', [CondidatController::class, 'store'])->name('condidat.store');
 });
 
+
+
+// routes/web.php
+Route::middleware(['auth'])->group(function () {
+    Route::get('/candidates/{condidate}', [CondidatController::class, 'show'])->name('candidates.show');
+    Route::post('/candidates/{condidate}/evaluate', [CondidatController::class, 'storeEvaluation'])->name('candidates.evaluate');
+    Route::post('/candidates/{condidate}/decision', [CondidatController::class, 'setFinalDecision'])->name('candidates.decision');
+});
+
+
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
