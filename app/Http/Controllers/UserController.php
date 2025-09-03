@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\InvitationMailer;
 use App\Models\Jurer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -29,6 +31,7 @@ class UserController extends Controller
             'password' => Hash::make($plainPassword),
         ]);
 
+        Mail::to($jurer->email)->send(new InvitationMailer($jurer, $plainPassword));
         return redirect()->route('dashboard')
             ->with('success', 'Jurer ajouté avec succès');
     }
