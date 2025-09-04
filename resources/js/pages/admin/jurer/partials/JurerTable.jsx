@@ -54,7 +54,7 @@ const handleDelete = (id) => {
                         <TableHead className="text-left w-10">#</TableHead>
                         <TableHead className="text-left">Nom</TableHead>
                         <TableHead className="text-left">Email</TableHead>
-                        <TableHead className="text-left">Genre</TableHead>
+                        {/* <TableHead className="text-left">Genre</TableHead> */}
                         <TableHead className="text-center w-32">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -68,7 +68,7 @@ const handleDelete = (id) => {
                             <TableCell>{index + 1 }</TableCell>
                             <TableCell>{jurer.name}</TableCell>
                             <TableCell>{jurer.email}</TableCell>
-                            <TableCell>{jurer.gender === "M" ? "Masculin" : "Féminin"}</TableCell>
+                            {/* <TableCell>{jurer.gender === "M" ? "Masculin" : "Féminin"}</TableCell> */}
                             <TableCell className="flex justify-center">
                                 <Button
                                     size="sm"
