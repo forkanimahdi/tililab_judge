@@ -59,7 +59,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::fallback(function () {
-    return redirect('/admin/dashboard');
+    return redirect('/dashboard');
 });
 
 
