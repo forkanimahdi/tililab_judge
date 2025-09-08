@@ -57,5 +57,11 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+
+Route::fallback(function () {
+    return redirect('/admin/dashboard');
+});
+
+
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
